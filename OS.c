@@ -4,7 +4,10 @@
 #include <unistd.h>  //Header file for sleep(). 
 #include <pthread.h>  
 
-
+typedef struct Queue{
+	int item;
+	char name;
+}Queue;
 void *myThreadFun(void *vargp)  {
 	  
       
@@ -36,14 +39,14 @@ int max(int* b, int size){
 	return loc;
 
 }
-void bubbleSort(int* a,char* v,int size){
+void bubbleSort(Queue* a,int size){
 	int i,j;
 	for(i=0;i<size;i++){
 		for(j=0;j<size-i-1;j++){
-			if(a[j]<a[j+1]){
-				char temp=v[j+1];
-				v[j+1]=v[j];
-				v[j]=temp;
+			if(a[j].item<a[j+1].item){
+				Queue temp=a[j+1];
+				a[j+1]=a[j];
+				a[j]=temp;
 			}
 		}
 	}
@@ -53,22 +56,21 @@ void main(){
 	pthread_create(&thread_id, NULL, myThreadFun, NULL);      
 	pthread_join(thread_id, NULL);
 	system("CLS");
+	Queue Q[10];
 	int a[10],sum=0;
-	printf("Enter the number of item all ten kids have one by one:\n");
+	printf("Enter the number of item all ten kids (with names a,b,c,d,e,f,g,h,i,j) have one by one:\n");
 	for(int i=0;i<10;i++){
-		scanf("%d",&a[i]);
+		scanf("%d %c",&Q[i].item,&Q[i].name);
 	}
 	for(int i=0;i<10;i++){
-		int loc=max(a,10);
-		int temp=a[loc];
-		a[loc]=0-sum;
-		sum=sum+temp;
+		sum=sum+Q[i].item;
 	}
-	char c[]="abcdefghij";
-	bubbleSort(a,c,10);
+
+	bubbleSort(Q,10);
 	for(int i=0;i<10;i++){
-		printf("%c ", c[i]);
+		printf("%c ",Q[i].name);
 	}
+	printf("\nTotal Time taken by Billing person: %d",sum);
 	
 }
 
