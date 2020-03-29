@@ -29,16 +29,8 @@ void *myThreadFun(void *vargp)  {
 	getch();
 	return NULL;  
 }
-int max(int* b, int size){
-	int maxi=b[0],loc=0;
-	for(int i=0;i<size;i++){
-		if(b[i]>maxi){
-			loc=i;
-		}
-	}
-	return loc;
 
-}
+
 void bubbleSort(Queue* a,int size){
 	int i,j;
 	for(i=0;i<size;i++){
